@@ -1,5 +1,9 @@
 # 필연과 우연 — SFX Priority Channel System
 
+> **Project:** &lt;필연과 우연&gt;  
+> **Role:** Client / System Programmer  
+> **Contribution:** 효과음 우선순위·채널 할당 구조 구현 및 채널 포화 상황 검증
+
 > **Low / High Priority · Reserved Channels · Saturation Fallback**
 
 ## 1. 문서 목적
@@ -117,6 +121,6 @@ ChannelState
 
 ---
 
-## 9. 연구개발 직무와의 연결점
+## 9. 게임 프로그래밍 역량
 
 한정된 런타임 자원에서 요청의 중요도, 접근 범위와 포화 시 fallback 정책을 정의했습니다. 실제 구현과 문서의 표현을 일치시키고, 현재 코드의 한계를 다음 상태 모델 개선안으로 구체화했습니다.

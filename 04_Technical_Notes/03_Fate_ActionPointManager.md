@@ -1,5 +1,9 @@
 # 필연과 우연 — ActionPointManager State Flow
 
+> **Project:** &lt;필연과 우연&gt;  
+> **Role:** Client / System Programmer  
+> **Contribution:** 행동력·날짜 진행 시스템 설계·구현 및 반복 입력·상태 예외 검증
+
 > **State Validation · Shared Flow · Room-specific Rules**
 
 ## 1. 문서 목적
@@ -131,6 +135,6 @@ Coroutine으로 기어, 시계, 페이지, 페이드, BGM과 후속 이벤트를
 
 ---
 
-## 11. 연구개발 직무와의 연결점
+## 11. 게임 프로그래밍 역량
 
 요구사항을 공통 절차와 예외 규칙으로 나누고, 실제 입력 경계 조건에서 발생한 상태 불일치를 재현·수정한 경험입니다. 현재 구조의 결합도와 확장 한계를 분석해 후속 리팩터링 방향까지 제시했습니다.

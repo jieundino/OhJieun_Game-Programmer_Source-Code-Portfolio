@@ -1,5 +1,9 @@
 # 네 발자국 — CSV 기반 Event / Result System
 
+> **Project:** &lt;네 발자국&gt;  
+> **Role:** Main Client Programmer / Initial Concept Planning  
+> **Contribution:** CSV 기반 이벤트 시스템 설계·구현 및 실행 흐름 검증
+
 > **Data-driven Content · Condition Evaluation · Result Execution**
 
 ## 1. 문서 목적
@@ -120,7 +124,7 @@
 
 ---
 
-## 9. 연구개발 직무와의 연결점
+## 9. 게임 프로그래밍 역량
 
 - 기획 요구사항을 데이터 구조와 실행 파이프라인으로 변환
 - 반복 수정이 예상되는 기능의 확장 지점 설계

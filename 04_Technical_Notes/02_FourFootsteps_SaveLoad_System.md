@@ -1,5 +1,9 @@
 # 네 발자국 — Save / Load Reliability System
 
+> **Project:** &lt;네 발자국&gt;  
+> **Role:** Main Client Programmer / Initial Concept Planning  
+> **Contribution:** Save/Load 시스템 구현 및 저장 안정성·복원 예외 처리 검증
+
 > **Atomic Write · Type Preservation · Legacy Recovery**
 
 ## 1. 문서 목적
@@ -116,6 +120,6 @@
 
 ---
 
-## 10. 연구개발 직무와의 연결점
+## 10. 게임 프로그래밍 역량
 
 정상 동작뿐 아니라 강제 종료, 타입 변경, 데이터 손상과 구버전 호환이라는 실패 조건을 정의하고, 복구 정책과 후속 검증 항목을 구조화한 경험입니다.

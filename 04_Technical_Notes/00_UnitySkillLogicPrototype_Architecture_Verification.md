@@ -1,5 +1,9 @@
 # Unity Skill Logic Prototype — Architecture & Feature Verification
 
+> **Project:** Unity Skill Logic Prototype  
+> **Role:** Solo Developer / System Designer  
+> **Contribution:** 스킬 시스템 요구사항 정의, 구조 설계, 구현·수정 및 기능 검증
+
 ## 1. 문서 목적
 
 본 문서는 일반적인 전투 스킬 명세를 Unity C# 실행 구조로 변환한 과정과 기능 검증 결과를 정리합니다.

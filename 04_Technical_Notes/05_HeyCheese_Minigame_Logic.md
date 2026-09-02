@@ -1,5 +1,9 @@
 # 헤이 치즈! — Mini-game Prototype & Validation
 
+> **Project:** &lt;Hey Cheese!&gt;  
+> **Role:** Mini-game Client Programmer  
+> **Contribution:** 4종 미니게임 로직 구현 및 Android·사용자 테스트 환경에서 기능 검증
+
 > **Common Flow · Game-specific Rules · Android Validation**
 
 ## 1. 문서 목적
@@ -117,6 +121,6 @@ Slider, Text와 Sprite를 사용해 현재 진행도, 남은 시간과 결과를
 
 ---
 
-## 10. 연구개발 직무와의 연결점
+## 10. 게임 프로그래밍 역량
 
 기능을 작은 프로토타입 단위로 구현하고, 공통 요소와 개별 규칙을 분리한 뒤 실제 기기와 사용자 환경에서 검증했습니다. 결과뿐 아니라 테스트의 한계와 후속 개선 과제를 함께 정리했습니다.

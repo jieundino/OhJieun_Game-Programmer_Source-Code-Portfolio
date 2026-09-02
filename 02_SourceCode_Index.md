@@ -92,7 +92,7 @@ SOSkill
 
 ---
 
-# 2. Four Footsteps — Data-driven Systems
+# 2. &lt;네 발자국&gt; — Data-driven Systems
 
 ## EventResultSystem
 
@@ -126,7 +126,7 @@ SOSkill
 
 ---
 
-# 3. Fate — Runtime Systems
+# 3. <필연과 우연> — Runtime Systems
 
 ## ActionPointSystem
 
@@ -153,7 +153,7 @@ SOSkill
 
 ---
 
-# 4. Hey Cheese — Mini-game Prototypes
+# 4. &lt;Hey Cheese!&gt; — Mini-game Prototypes
 
 - `MiniGameManager.cs`: 공통 시작·완료·재시작·복귀 흐름
 - `MiniGame2_2Manager.cs`: 할 일 목록과 완료 상태 관리
