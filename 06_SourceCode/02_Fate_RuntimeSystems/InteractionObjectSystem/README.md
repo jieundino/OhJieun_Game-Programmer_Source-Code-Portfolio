@@ -14,6 +14,11 @@
 `EventObject`를 공통 베이스로 설계해, 클릭 시 이벤트 호출 흐름을 단일 진입점으로 통합했습니다. 개별 오브젝트(`Chair`, `Drawers`)는 `EventObject`를 상속하고, ResultManager에서 동작을 주입할 수 있도록 `IResultExecutable` 인터페이스를 구현합니다.
 
 ---
+## 담당 범위
+> **Contribution:** 공통 상호작용 진입점,
+> Chair·Drawers 상태 변화, Result 연동 및 Save/Load 복원 구현·수정
+
+---
 
 ## 주요 구현
 
@@ -90,6 +95,12 @@ private void OnEnable()
     rectTransform.anchoredPosition = chairMoved ? movedPositions[sideNum] : originalPosition;
 }
 ```
+---
+## 한계 및 개선 방향
+- GameManager의 변수 이름과 Result 등록 문자열에 의존
+- 오브젝트 종류 증가 시 상속 클래스와 문자열 ID 관리 복잡도 증가
+- 개별 MonoBehaviour에 이동·상태·표현 책임이 함께 존재
+- 공통 State Restore Interface와 ID Registry 도입 검토
 
 ---
 

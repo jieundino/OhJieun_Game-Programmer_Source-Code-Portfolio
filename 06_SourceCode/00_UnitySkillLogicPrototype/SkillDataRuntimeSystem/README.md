@@ -18,6 +18,17 @@ ScriptableObject는 스킬 명세를 관리하고, 별도의 C# Runtime 객체�
 
 ---
 
+## 담당 범위
+
+> **Project:** Unity Skill Logic Prototype  
+> **Role:** Solo Developer / System Designer  
+> **Contribution:** 스킬 설정 데이터와 슬롯별 Runtime 상태 구조 설계·구현 및 쿨타임 상태 검증
+
+직접 작성:
+- `SOSkill.cs`
+- `SkillRuntime.cs`
+---
+
 ## 주요 구현
 
 ### `SOSkill` — ScriptableObject 기반 스킬 데이터
@@ -108,23 +119,41 @@ SkillRuntime
 
 ---
 
-## 설계상 고려 사항
+## 핵심 설계 결정
 
-### ScriptableObject에 Runtime 상태를 저장하지 않음
+### ScriptableObject에는 설정 데이터만 저장
 
-ScriptableObject는 여러 객체가 동일한 Asset을 참조할 수 있습니다. 남은 쿨타임을 Asset에 직접 저장하면 하나의 캐릭터나 슬롯에서 변경한 값이 다른 사용처에도 영향을 줄 수 있습니다.
+ScriptableObject는 여러 객체가 동일한 Asset을 참조할 수 있습니다.
+남은 쿨타임을 Asset에 직접 저장하면 하나의 슬롯에서 변경된 상태가
+다른 슬롯에도 공유될 수 있습니다.
 
-따라서 `SOSkill`은 설정 데이터만 보유하고, 각 슬롯은 별도의 `SkillRuntime` 인스턴스를 생성하도록 구성했습니다.
+따라서 `SOSkill`에는 정적 설정 데이터만 저장하고,
+각 슬롯은 별도의 `SkillRuntime` 인스턴스를 가지도록 구성했습니다.
 
-### Cooldown UI와 내부 상태의 기준 통일
+### Runtime 상태를 UI의 단일 기준으로 사용
 
-Skill UI가 별도의 타이머를 계산하지 않고 `SkillRuntime.CooldownRatio`를 직접 사용하도록 했습니다.
+Skill UI가 별도의 쿨타임 타이머를 계산하지 않고
+`SkillRuntime.CooldownRatio`를 직접 사용하도록 구성했습니다.
 
-이를 통해 실제 사용 가능 상태와 화면에 표시되는 쿨타임 비율이 서로 다른 값을 기준으로 동작하지 않도록 했습니다.
+이를 통해 실제 스킬 사용 가능 상태와 UI 표시가
+서로 다른 값을 기준으로 동작하지 않도록 했습니다.
 
-### 확장 범위
+---
+## 예외 / 검증
 
-현재 구조는 동일한 SkillType의 데이터 Variant 생성에는 적합하지만, 새로운 실행 방식의 SkillType을 추가하는 경우 `SkillExecutor`의 분기 로직도 함께 확장해야 합니다.
+- 동일한 `SOSkill` Asset을 여러 슬롯이 참조해도 각 슬롯의 쿨타임이 독립적으로 유지되는지 확인
+- `Tick()` 반복 호출 후 `RemainingCooldown`이 0 아래로 내려가지 않는지 확인
+- `coolTime == 0`일 때 `CooldownRatio`가 0으로 반환되는지 확인
+- `RemainingCooldown <= 0`인 경우에만 `IsReady`가 `true`가 되는지 확인
+- 실제 사용 가능 상태와 Skill UI가 동일한 `SkillRuntime` 값을 기준으로 동작하는지 확인
+
+---
+
+## 한계 및 개선 방향
+
+- 현재 Runtime 상태는 쿨타임 중심이며 자원·충전 횟수·Stack 상태는 포함하지 않음
+- 새로운 실행 방식의 SkillType을 추가하는 경우 SkillExecutor의 분기 로직도 함께 확장해야 함
+- 슬롯 규모가 커지면 Runtime 생성과 수명주기를 전담하는 컨테이너 분리 검토
 
 ---
 

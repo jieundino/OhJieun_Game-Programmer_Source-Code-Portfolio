@@ -16,6 +16,11 @@
 Result는 `ExecuteResultCoroutine`의 switch문으로 처리합니다. 대사 시작, 변수 증감, 페이드, 씬 이동 등 다양한 동작을 하나의 진입점에서 관리합니다. 씬별로 다른 오브젝트 동작이 필요한 경우 `IResultExecutable` 인터페이스로 오브젝트가 스스로 등록하고, ResultManager는 이름으로 호출합니다.
 
 ---
+## 담당 범위
+> **Contribution:** CSV·ID 기반 이벤트 구조,
+> AND/OR 조건 판정, Instant/Sequential 실행 파이프라인 설계·구현 및 검증
+
+---
 
 ## 주요 구현
 
@@ -91,6 +96,13 @@ else if (logic == "OR")
 **존재하지 않는 Result ID 참조 시 이벤트 전체 중단**
 
 CSV에 오타로 잘못된 Result ID를 입력하면 `results` Dictionary에서 키를 찾지 못해 예외가 발생하거나 이벤트 전체가 조용히 실패했습니다. 키가 없으면 임시 Result 객체를 생성하고 `Debug.LogWarning`을 출력하도록 수정해, 나머지 Result는 정상 실행되고 문제 ID는 로그로 확인할 수 있게 했습니다.
+
+---
+## 한계 및 개선 방향
+- 단순 CSV Split은 quoted comma 필드에 취약
+- 존재하지 않는 ID와 중복 ID를 런타임 전에 검증하기 어려움
+- Result 유형 증가 시 switch 분기 확대
+- Sequential 실행의 취소/인터럽트 정책이 명시적이지 않음
 
 ---
 

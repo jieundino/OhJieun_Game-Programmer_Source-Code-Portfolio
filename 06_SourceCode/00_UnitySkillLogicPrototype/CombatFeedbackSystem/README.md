@@ -21,7 +21,11 @@ Enemy의 체력·사망 상태와 Health Bar, Skill Cooldown UI, 범위 Indicato
 - `SkillRangeIndicator` — 스킬 적용 범위 시각화
 
 ---
+## 담당 범위
+> **Contribution:** Enemy Health·Death 상태, 이벤트 기반 Health Bar,
+> Skill Cooldown UI와 Range Indicator 구현·검증
 
+---
 ## 주요 구현
 
 ### `EnemyHealth` — 전투 상태 관리
@@ -145,6 +149,14 @@ Skill UI가 별도 타이머를 관리하지 않고 `SkillRuntime.CooldownRatio`
 ### 현재 개선 가능 지점
 
 `SkillButton`은 매 Frame Runtime 상태를 조회합니다. 현재 스킬 슬롯 수에서는 단순한 구현을 우선했지만 스킬 수가 증가하는 경우 Runtime 상태 변경 이벤트를 추가해 필요한 시점에만 UI를 갱신하는 방식과 비교할 수 있습니다.
+
+---
+## 한계 및 개선 방향
+
+- SkillButton은 매 Frame Runtime 상태를 조회
+- Enemy별 Health Bar를 런타임 생성하므로 적 수가 많아지면 Pooling 검토 필요
+- 체력 외 Shield, Buff/Debuff 등의 상태 표현 구조는 미구현
+- UI 규모가 증가하면 Presenter 생성·수명주기를 별도 UI Manager로 분리 가능
 
 ---
 

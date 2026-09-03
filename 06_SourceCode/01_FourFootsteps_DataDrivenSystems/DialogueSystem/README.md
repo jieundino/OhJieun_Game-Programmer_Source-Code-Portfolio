@@ -15,6 +15,12 @@
 
 ---
 
+## 담당 범위
+> **Contribution:** Dialogue Queue, 대사·선택지 출력,
+> 말풍선 위치 추적과 한국어 조사 치환 기능 구현·수정·검증
+
+---
+
 ## 주요 구현
 
 **대화 흐름 관리**
@@ -109,6 +115,13 @@ private void Update()
 }
 ```
 
+---
+## 한계 및 개선 방향
+
+- DialogueManager에 데이터 조회, UI, 입력과 말풍선 책임이 함께 존재
+- Queue는 FIFO 순서를 보장하지만 우선순위·취소·인터럽트 정책은 없음
+- DialogueType 증가 시 UI 분기 확대 가능
+- 대화 ID·선택지 참조 오류를 런타임 이전에 검증하는 Editor Validator 추가 가능
 ---
 
 ## 사용 기술

@@ -14,6 +14,11 @@
 정답 테이블은 `Dictionary<int, int>`로 관리합니다. 비즈 번호(key)에 대한 정답 열(column) 위치(value)를 저장해, 정답 확인 시 순서대로 비교하면 됩니다.
 
 ---
+## 담당 범위
+> **Contribution:** 반짇고리 Drag & Drop,
+> DropZone·Row Constraint와 Dictionary 기반 정답 판정 구현·검증
+
+---
 
 ## 주요 구현
 
@@ -103,6 +108,14 @@ IEnumerator SmoothMoveToParent(RectTransform targetParent, float duration)
 }
 ```
 
+---
+## 한계 및 개선 방향
+- DropZone을 순회해 최근접 위치를 찾는 구조
+- Row1의 특수 배치 제약이 코드에 직접 포함
+- DropZone 이름 파싱에 위치 규칙이 의존할 가능성
+- 다양한 화면 비율의 자동 입력 테스트 미구현
+### 개선 방향
+- IPlacementRule 같은 Validation Strategy로 배치 규칙 분리
 ---
 
 ## 사용 기술

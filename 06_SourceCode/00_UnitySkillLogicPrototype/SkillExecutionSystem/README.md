@@ -19,6 +19,12 @@
 핵심은 단순 입력 발생이 아니라 **각 스킬의 성공 조건을 만족해 실제 실행된 경우에만 쿨타임을 시작하는 것**입니다.
 
 ---
+## 담당 범위
+
+> **Contribution:** Skill Activation Pipeline, Target Validation,
+> Normal·DoT·Area 실행 규칙과 실패·경계 조건 구현·검증
+
+---
 
 ## 주요 구현
 
@@ -221,29 +227,52 @@ Execution Result
 
 ---
 
-## 검증 및 고려 사항
+## 예외 / 검증
 
 ### 단일 대상 실행 실패 시 상태 변화 차단
 
 대상이 없거나 사거리 밖이면 Effect, Cooldown과 Animation을 적용하지 않습니다.
 
-### 자기 중심 Area Skill의 성공 정책
+### 자기 중심 Area Skill의 성공 조건
 
-Area Skill은 적중 대상 유무와 관계없이 발동 가능한 스킬로 정의했습니다. 따라서 적중 대상이 0명이어도 Cooldown과 Animation을 적용합니다.
+Area Skill은 적중 대상 유무와 관계없이 발동 가능한 스킬로 정의했습니다.
+따라서 적중 대상이 0명이어도 Cooldown과 Animation을 적용합니다.
 
-이는 Target-dependent Skill과 Self-activated Skill의 성공 조건을 구분한 결과입니다.
+이를 통해 `Target-dependent Skill`과 `Self-activated Skill`의
+성공 조건을 구분했습니다.
 
 ### 범위 공격의 중복 피해 방지
 
-하나의 Enemy가 Root Collider와 Hit Collider를 동시에 보유하더라도 `HashSet<EnemyHealth>`에 한 번만 등록되기 때문에 피해는 Enemy 기준으로 한 번만 적용됩니다.
+하나의 Enemy가 여러 Collider를 가지고 있어도
+`HashSet<EnemyHealth>`에 한 번만 등록되므로
+Enemy 단위로 피해가 한 번만 적용되는지 확인했습니다.
 
-### 사망 대상 필터링
+### 사망 대상 제외
 
-Target Search와 Area Skill 양쪽에서 `IsDead`를 검사해 사망한 적이 새로운 공격 대상에 포함되지 않도록 했습니다.
+Target Search와 Area Skill 양쪽에서 `IsDead`를 검사해
+사망한 Enemy가 새로운 공격 대상에 포함되지 않도록 했습니다.
 
-### 현재 확장 한계
+### DoT 부분 성공 방지
 
-현재는 `SkillType` switch문으로 실행 규칙을 분기합니다. SkillType이 증가하면 `SkillExecutor`가 비대해질 수 있으므로 후속 단계에서는 Targeting Rule과 Skill Effect를 독립 실행 단위로 분리할 수 있습니다.
+DoT 실행에 필요한 컴포넌트와 대상 조건을 모두 확인한 뒤
+피해를 적용해, 피해만 적용되고 실행 결과는 실패하는
+부분 성공 상태가 발생하지 않는지 확인했습니다.
+
+---
+
+## 한계 및 개선 방향
+
+- 현재 `SkillType` switch문으로 실행 규칙을 분기하므로 SkillType이 증가하면 `SkillExecutor`가 비대해질 수 있음
+- Target 탐색과 Effect Execution 책임이 `SkillExecutor`에 함께 존재
+- 고정 크기 `Collider[]` Buffer보다 많은 Collider가 탐색되면 일부 결과가 포함되지 않을 수 있음
+- DoT는 기존 효과를 갱신하는 Refresh 정책만 지원하며 Stack 또는 독립 중첩 정책은 미지원
+
+### 개선 방향
+
+- Target 탐색 규칙을 `ITargetingRule`과 같은 독립 책임으로 분리
+- Damage, DoT, Heal, Buff 등을 `ISkillEffect` 단위로 분리
+- 전투 규모에 따라 Collider Buffer 크기 조정 또는 탐색 정책 보완
+- Unity Test Framework 기반 실패·경계 조건 자동 검증
 
 ---
 

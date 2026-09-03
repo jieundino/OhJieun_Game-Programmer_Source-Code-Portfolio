@@ -15,6 +15,11 @@
 타입 보존도 문제였습니다. `Dictionary<string, object>`를 그대로 직렬화하면 역직렬화 시 타입 정보가 손실되어 `int`가 `long`으로, `Dictionary<int, bool>`이 `string`으로 돌아오는 경우가 생겼습니다. 변수 값과 타입 정보를 분리해 두 개의 JSON으로 저장하는 방식으로 해결했습니다.
 
 ---
+## 담당 범위
+> **Contribution:** Save/Load 구조 구현,
+> Atomic Write·타입 보존·레거시 복구와 상태 복원 검증
+
+---
 
 ## 주요 구현
 
@@ -121,6 +126,14 @@ SaveManager
 **`SaveVariable` 부분 저장의 위험성**
 
 처음에는 변경된 변수 하나만 파일에서 찾아 교체하는 부분 저장을 시도했습니다. 파일 읽기 → 파싱 → 특정 값 교체 → 다시 쓰기 과정에서 타입 정보가 손실되거나 다른 변수가 오염되는 문제가 있었습니다. 안전을 위해 `SaveVariable`은 내부적으로 전체 저장(`SaveGameData`)을 호출하도록 통합했습니다.
+
+---
+## 한계 및 개선 방향
+
+- 타입 종류가 증가하면 문자열 기반 타입 변환 코드가 늘어날 수 있음
+- Migration 규칙 증가 시 SaveManager 책임이 커짐
+- PlayerPrefs와 파일 저장이 혼재하면 버전 기준 관리가 복잡해질 수 있음
+- 명시적 `saveVersion`, DTO, Migration Pipeline과 손상 데이터 자동 테스트 도입 가능
 
 ---
 

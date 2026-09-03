@@ -7,11 +7,11 @@
 - 제출 파일 작성·수정 비중: 100%
 - 공동개발 프로젝트 전체 코드가 아니라 지원자의 담당 범위만 포함
 - Scene, Prefab, CSV 원본, 일부 Manager와 외부 패키지에 의존하는 코드 검토용 자료
-- 프로젝트 전체 기여 비중은 상위 `02_Project_Contribution.md` 참고
+- 프로젝트 전체 기여 비중은 상위 [`../../01_Project_Contribution.md`](../../01_Project_Contribution.md) 참고
 
 ## 핵심 확인 지점
 
-| 폴더 | 연구개발 관점의 확인 지점 |
+| 폴더 | 핵심 확인 지점 |
 | --- | --- |
 | `EventResultSystem` | 요구사항을 CSV·ID와 조건/결과 실행기로 구조화 |
 | `DialogueSystem` | 동시 대사 요청을 Queue로 순서 제어 |

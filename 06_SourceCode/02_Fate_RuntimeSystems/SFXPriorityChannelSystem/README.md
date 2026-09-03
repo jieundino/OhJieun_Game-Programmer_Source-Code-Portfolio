@@ -14,6 +14,11 @@ Unity의 `AudioSource` 컴포넌트는 개수가 제한됩니다. 클릭음처�
 이를 해결하기 위해 `UISoundPlayer` 배열을 두 구간으로 나눴습니다. `[0 ~ reservedHighPriorityChannels)` 구간은 High 우선순위 전용으로 예약하고, `[reserved ~ end)` 구간은 Low 우선순위가 사용합니다. High 효과음은 Low 채널을 강제로 선점(Voice Stealing)할 수 있지만, Low 효과음은 High 채널에 접근하지 못합니다.
 
 ---
+## 담당 범위
+> **Contribution:** 효과음 우선순위·채널 할당 구조 구현 및
+> 반복 입력·채널 포화 상황 검증
+
+---
 
 ## 주요 구현
 
@@ -28,7 +33,12 @@ Unity의 `AudioSource` 컴포넌트는 개수가 제한됩니다. 클릭음처�
 1. **클릭 디바운스** — `Time.unscaledTime - lastClickTime < clickMinInterval`(50ms) 조건으로 너무 빠른 연속 클릭 효과음을 억제합니다. `unscaledTime`을 사용하는 것은 일시정지 중에도 시간 기준이 유지되어야 하기 때문입니다.
 2. **우선순위 구간 결정** — `SfxPriority`에 따라 탐색 구간(`start`, `end`)을 결정합니다.
 3. **라운드 로빈 빈 채널 탐색** — `uiSoundPlayerCursor`를 사용해 매번 다른 채널에서 시작해 공평하게 분산합니다. 특정 채널에만 재생이 집중되어 기존 효과음이 강제로 중단되는 문제를 방지합니다.
-4. **보이스 스틸링 (High only)** — 빈 채널이 없는 경우, High 우선순위 효과음은 Low 채널 중 재생 중인 것을 중단하고 강제로 재생합니다.
+4. **보이스 스틸링 (High only)** — 빈 채널이 없는 경우, 일반 영역에서 재생 중인 채널 하나를 중단하고 High 요청을 재생합니다.
+
+> 현재 구현은 일반 영역에서 재생 중인 사운드의 실제 Priority를
+> 별도 상태로 저장하지 않습니다.
+> 따라서 Voice Stealing은 <u>Low Priority를 정확히 찾아 교체</u>하는 구조가 아니라
+> <u>High 요청이 일반 영역 채널을 회수할 수 있는 fallback</u>으로 설명합니다.
 
 ```
 UISoundPlay(num, priority)

@@ -22,6 +22,13 @@ Google Spreadsheet로 자동 수집하는 시스템입니다.
 
 ---
 
+## 담당 범위
+
+> **Contribution:** 플레이 로그 식별·수집,
+> 영속 Retry Queue, UnityWebRequest 전송과 Google Apps Script 수신 흐름 설계·구현·검증
+
+---
+
 ## 클래스별 역할
 
 **`EndingLogQueueManager`** — 전송 큐 및 HTTP 통신
@@ -180,6 +187,16 @@ private void SaveQueue(List<EndingLogPayload> list)
 | `endingType` | 도달한 엔딩 종류 |
 | `memoryPuzzleStatesJson` | 퍼즐 수집 상태 (정규화 JSON, 1-based 인덱스) |
 | `responsibilityScore` | 책임감 점수 |
+
+---
+
+## 한계 및 개선 방향
+
+- Google Apps Script / Spreadsheet 기반으로 학술 실험 규모에 맞춘 구조
+- eventId 중복 검사가 Sheet 전체 선형 탐색이므로 데이터 증가 시 비효율적
+- 수동 JSON 필드 추출은 Save 형식 변경에 취약
+- 클라이언트에 공유 Key가 포함되는 방식은 상용 인증 구조로 사용할 수 없음
+- 라이브 서비스라면 서버 인증, 전용 Queue/Storage와 명시적 Schema 필요
 
 ---
 

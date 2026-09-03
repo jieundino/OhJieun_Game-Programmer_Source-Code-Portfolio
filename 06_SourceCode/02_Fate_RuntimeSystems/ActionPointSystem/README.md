@@ -14,6 +14,11 @@
 처음에는 하나의 클래스에서 `if (isRoom2)` 분기로 처리했는데, 규칙이 늘어날수록 코드가 복잡해졌습니다. 그래서 공통 로직(`CreateHearts`, `DecrementActionPoint`, `RefillHeartsOrEndDay`, `nextMorningDay`)을 추상 메서드로 정의하고, 방별 클래스에서 오버라이드하는 구조로 리팩터링했습니다. 이후 Room2에 회복제·곰인형 규칙을 추가할 때도 Room1 코드를 건드리지 않고 확장할 수 있었습니다.
 
 ---
+## 담당 범위
+> **Contribution:** 행동력·날짜 진행 시스템 설계·구현 및
+> 반복 입력·상태 예외 검증
+
+---
 
 ## 주요 구현
 
@@ -105,6 +110,14 @@ protected IEnumerator TurnNextDayUIBack()
     _isTurningBack = false;
 }
 ```
+
+---
+## 한계 및 개선 방향
+- 내부 행동력 검증에 하트 UI 상태가 일부 포함되어 Model/View 결합
+- Room 증가 시 상속 클래스와 override 범위 확대 가능
+- Coroutine 취소 정책이 분산
+- 향후 행동력 State Model + Event 기반 UI,
+  Room Strategy 또는 State Machine 구조 검토
 
 ---
 

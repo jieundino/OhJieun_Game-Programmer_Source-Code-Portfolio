@@ -51,6 +51,10 @@ Cooldown / Animation / UI Feedback
 
 ## 🙋‍♀️ My Role
 
+> **Project:** Unity Skill Logic Prototype  
+> **Role:** Solo Developer / System Designer  
+> **Contribution:** 스킬 시스템 요구사항 정의, 구조 설계, 구현·수정 및 기능 검증
+
 본 프로젝트는 개인 기술 프로토타입으로 진행했으며 다음 영역을 직접 설계하고 구현했습니다.
 
 - ScriptableObject 기반 스킬 데이터 구조 설계
@@ -66,6 +70,10 @@ Cooldown / Animation / UI Feedback
 - Skill Cooldown UI 및 범위 Indicator 구현
 - 카메라 기준 이동과 스킬 사용 방향 전환 구현
 - 기능별 성공·실패·경계 조건 검증 시나리오 정의
+
+생성형 AI는 설계 대안 비교, API 및 구현 방식 검토,
+디버깅과 테스트 케이스 점검을 위한 보조 도구로 활용했습니다.
+최종 구조 선택, 코드 통합, 예외 조건 정의와 실행 결과 검증은 직접 수행했습니다.
 
 <br>
 
