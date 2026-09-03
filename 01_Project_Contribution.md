@@ -84,69 +84,9 @@
 
 ---
 
-# 2. <네 발자국>
+# 2. <필연과 우연>
 
 ## 2.1 프로젝트 정보
-
-| 항목 | 내용 |
-| --- | --- |
-| 개발 형태 | 4인 공동개발 |
-| 담당 역할 | Main Client Programmer / Initial Concept Planning |
-| 담당 기간 | 2025.03 ~ 2026.02 |
-| 주요 기술 | Unity, C#, CSV, Dictionary, Newtonsoft.Json, UnityWebRequest, PlayerPrefs |
-| 결과 | STOVE 출시, 학술발표대회·학술지 논문 제1저자 |
-
-## 2.2 기여 비중
-
-| 기준 | 비중 | 산정 근거 |
-| --- | --- | --- |
-| 전체 프로젝트 기준 | **약 45%** | 기획·개발·아트 등 전체 업무를 포함한 실제 역할 분담 기준 |
-| 개발 파트 기준 | **약 60%** | 클라이언트 시스템 설계, 구현, 유지보수, 테스트 범위 기준 |
-| 본 제출 코드 기준 | **100%** | 제출한 파일은 지원자가 직접 작성하거나 직접 수정한 코드만 선별 |
-
-## 2.3 직접 담당한 기능
-
-- CSV 기반 대사·선택지·이벤트·결과 데이터 구조
-- `DialogueManager`와 Dialogue Queue
-- `EventManager / ResultManager` 실행 파이프라인
-- AND / OR 조건 판정과 Instant / Sequential 실행 모드
-- 선택·조사 결과와 멀티엔딩 분기 상태 관리
-- Newtonsoft.Json 기반 Save/Load
-- Atomic Write, `.bak` 백업과 레거시 복구
-- 사용자 행동 로그 수집, 중복 방지와 Retry Queue
-- 출시·실험 빌드 기능 점검
-- 시스템 구조와 사용자 테스트 결과 문서화
-
-## 2.4 제출 코드
-
-| 폴더 | 주요 파일 | 확인 가능한 내용 |
-| --- | --- | --- |
-| `DialogueSystem` | `DialogueManager.cs`, `KoreanJosa.cs` | Queue 기반 대사 요청 순서 제어 |
-| `EventResultSystem` | `EventManager.cs`, `ResultManager.cs` | 데이터 기반 조건 판정과 결과 실행 |
-| `SaveSystem` | `SaveManager.cs` | Atomic Write, 타입 보존, fallback 복구 |
-| `LogSystem` | Queue/Reporter/Types 파일 | 로그 식별, 실패 보존과 재전송 |
-
-## 2.5 협업 경계
-
-- 아트 리소스와 캐릭터 애니메이션은 다른 팀원이 담당했습니다.
-- 일부 콘텐츠 데이터는 팀 기획 논의를 바탕으로 공동 작성했습니다.
-- 팀 저장소 전체 코드가 아니라 지원자가 직접 작성·수정한 클라이언트 시스템만 제출했습니다.
-- 프로젝트 전체 기술 요소와 지원자 직접 구현 범위를 혼동하지 않도록 폴더 README에 의존성과 생략 범위를 명시했습니다.
-
-## 2.6 대표적인 문제 해결
-
-- 대사 동시 호출 충돌 → Dialogue Queue 도입
-- 결과 실행 순서 충돌 → Instant / Sequential 모드 분리
-- 저장 중 파일 손상 → Atomic Write와 백업 적용
-- 복합 타입 역직렬화 실패 → 전용 직렬화와 fallback 복구
-- 로그 중복·소실 → RunID/eventId와 Retry Queue 적용
-- UnityEvent 씬 경계 참조 → ScriptableObject Command 구조로 개선
-
----
-
-# 3. <필연과 우연>
-
-## 3.1 프로젝트 정보
 
 | 항목 | 내용 |
 | --- | --- |
@@ -156,7 +96,7 @@
 | 주요 기술 | Unity, C#, UI Event System, Coroutine, AudioSource |
 | 결과 | STOVE·App Store 출시, BIC·Beaver Rocks 전시 |
 
-## 3.2 기여 비중
+## 2.2 기여 비중
 
 | 기준 | 비중 | 산정 근거 |
 | --- | --- | --- |
@@ -164,7 +104,7 @@
 | 개발 파트 기준 | **약 45%** | 퍼즐·행동력·상호작용·사운드 시스템과 QA 범위 기준 |
 | 본 제출 코드 기준 | **100%** | 제출한 파일은 지원자가 직접 작성하거나 직접 수정한 코드만 선별 |
 
-## 3.3 직접 담당한 기능
+## 2.3 직접 담당한 기능
 
 - 반짇고리 드래그 앤 드롭 퍼즐
 - UI 좌표 변환, 최근접 DropZone과 Row Constraint 판정
@@ -177,7 +117,7 @@
 - 출시·전시 환경의 입력·상태·사운드 문제 개선
 - 시퀀스 수정과 확인 항목 Notion 문서화
 
-## 3.4 제출 코드
+## 2.4 제출 코드
 
 | 폴더 | 주요 파일 | 확인 가능한 내용 |
 | --- | --- | --- |
@@ -186,19 +126,79 @@
 | `InteractionObjectSystem` | `EventObject.cs`, 개별 오브젝트 | 공통 상호작용 진입점과 개별 동작 |
 | `SFXPriorityChannelSystem` | `SoundPlayer.cs` | 한정된 채널의 우선순위 할당과 포화 대응 |
 
-## 3.5 협업 경계
+## 2.5 협업 경계
 
 - 전체 스토리, 아트, 사운드 리소스 제작과 일부 클라이언트 기능은 다른 팀원이 담당했습니다.
 - 제출 코드는 지원자가 직접 구현하거나 직접 수정한 기능으로 한정했습니다.
 - Scene·Prefab·데이터와 다른 Manager에 대한 의존성은 각 폴더 README에 명시했습니다.
 
-## 3.6 대표적인 문제 해결
+## 2.6 대표적인 문제 해결
 
 - 빠른 연속 클릭의 행동력 중복 차감 → 상태 기반 요청 차단
 - 비정상 DropZone 배치 → 좌표 변환·최근접 탐색·행 제약 검사
 - Room별 예외 누적 → 추상 클래스와 하위 규칙 분리
 - 반복 클릭음의 채널 점유 → Low/High 정책, 예약 채널과 Voice Stealing
 - 저장 복원 이후 상태·UI 불일치 → 날짜 인덱스와 오브젝트 상태 복원 보완
+
+---
+
+# 3. <네 발자국>
+
+## 3.1 프로젝트 정보
+
+| 항목 | 내용 |
+| --- | --- |
+| 개발 형태 | 4인 공동개발 |
+| 담당 역할 | Main Client Programmer / Initial Concept Planning |
+| 담당 기간 | 2025.03 ~ 2026.02 |
+| 주요 기술 | Unity, C#, CSV, Dictionary, Newtonsoft.Json, UnityWebRequest, PlayerPrefs |
+| 결과 | STOVE 출시, 학술발표대회·학술지 논문 제1저자 |
+
+## 3.2 기여 비중
+
+| 기준 | 비중 | 산정 근거 |
+| --- | --- | --- |
+| 전체 프로젝트 기준 | **약 45%** | 기획·개발·아트 등 전체 업무를 포함한 실제 역할 분담 기준 |
+| 개발 파트 기준 | **약 60%** | 클라이언트 시스템 설계, 구현, 유지보수, 테스트 범위 기준 |
+| 본 제출 코드 기준 | **100%** | 제출한 파일은 지원자가 직접 작성하거나 직접 수정한 코드만 선별 |
+
+## 3.3 직접 담당한 기능
+
+- CSV 기반 대사·선택지·이벤트·결과 데이터 구조
+- `DialogueManager`와 Dialogue Queue
+- `EventManager / ResultManager` 실행 파이프라인
+- AND / OR 조건 판정과 Instant / Sequential 실행 모드
+- 선택·조사 결과와 멀티엔딩 분기 상태 관리
+- Newtonsoft.Json 기반 Save/Load
+- Atomic Write, `.bak` 백업과 레거시 복구
+- 사용자 행동 로그 수집, 중복 방지와 Retry Queue
+- 출시·실험 빌드 기능 점검
+- 시스템 구조와 사용자 테스트 결과 문서화
+
+## 3.4 제출 코드
+
+| 폴더 | 주요 파일 | 확인 가능한 내용 |
+| --- | --- | --- |
+| `DialogueSystem` | `DialogueManager.cs`, `KoreanJosa.cs` | Queue 기반 대사 요청 순서 제어 |
+| `EventResultSystem` | `EventManager.cs`, `ResultManager.cs` | 데이터 기반 조건 판정과 결과 실행 |
+| `SaveSystem` | `SaveManager.cs` | Atomic Write, 타입 보존, fallback 복구 |
+| `LogSystem` | Queue/Reporter/Types 파일 | 로그 식별, 실패 보존과 재전송 |
+
+## 3.5 협업 경계
+
+- 아트 리소스와 캐릭터 애니메이션은 다른 팀원이 담당했습니다.
+- 일부 콘텐츠 데이터는 팀 기획 논의를 바탕으로 공동 작성했습니다.
+- 팀 저장소 전체 코드가 아니라 지원자가 직접 작성·수정한 클라이언트 시스템만 제출했습니다.
+- 프로젝트 전체 기술 요소와 지원자 직접 구현 범위를 혼동하지 않도록 폴더 README에 의존성과 생략 범위를 명시했습니다.
+
+## 3.6 대표적인 문제 해결
+
+- 대사 동시 호출 충돌 → Dialogue Queue 도입
+- 결과 실행 순서 충돌 → Instant / Sequential 모드 분리
+- 저장 중 파일 손상 → Atomic Write와 백업 적용
+- 복합 타입 역직렬화 실패 → 전용 직렬화와 fallback 복구
+- 로그 중복·소실 → RunID/eventId와 Retry Queue 적용
+- UnityEvent 씬 경계 참조 → ScriptableObject Command 구조로 개선
 
 ---
 

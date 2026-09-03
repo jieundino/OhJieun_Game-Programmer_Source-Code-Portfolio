@@ -19,12 +19,12 @@
 | 2 | Skill Activation Pipeline | `PlayerSkillController.cs`, `SkillExecutor.cs` | 사용 가능 상태 검사, 실행 결과 반환, 성공 시 쿨타임 적용 |
 | 3 | Target / Status Handling | `SkillExecutor.cs`, `DotStatusEffect.cs`, `EnemyHealth.cs` | 대상 탐색, 사거리 검증, DoT, 사망 대상 필터링, 중복 피해 방지 |
 | 4 | Combat Feedback Integration | Presenter 및 UI 파일 | 전투 상태와 UI 표현 책임 분리, Runtime 기반 쿨타임 표시 |
-| 5 | Event / Result Pipeline | `EventManager.cs`, `ResultManager.cs` | 데이터 기반 조건 판정, 실행 모드와 결과 처리 |
-| 6 | Save Reliability | `SaveManager.cs` | Atomic Write, 타입 보존, 백업·fallback 복구 |
-| 7 | Log Retry | `EndingLogQueueManager.cs`, `EndingLogReporter.cs` | 로그 식별, 중복 방지, 전송 실패 재시도 |
-| 8 | ActionPoint State Flow | `ActionPointManager.cs`, Room별 클래스 | 공통 상태 흐름과 콘텐츠별 예외 분리 |
-| 9 | SFX Channel Policy | `SoundPlayer.cs` | Low/High 채널 범위, Round-robin, Voice Stealing |
-| 10 | Puzzle Validation | `SewingBoxBead.cs`, `SewingBoxPuzzle.cs` | 좌표 변환, 유효 DropZone, Row Constraint |
+| 5 | ActionPoint State Flow | `ActionPointManager.cs`, Room별 클래스 | 공통 상태 흐름과 콘텐츠별 예외 분리 |
+| 6 | SFX Channel Policy | `SoundPlayer.cs` | Low/High 채널 범위, Round-robin, Voice Stealing |
+| 7 | Puzzle Validation | `SewingBoxBead.cs`, `SewingBoxPuzzle.cs` | 좌표 변환, 유효 DropZone, Row Constraint |
+| 8 | Event / Result Pipeline | `EventManager.cs`, `ResultManager.cs` | 데이터 기반 조건 판정, 실행 모드와 결과 처리 |
+| 9 | Save Reliability | `SaveManager.cs` | Atomic Write, 타입 보존, 백업·fallback 복구 |
+| 10 | Log Retry | `EndingLogQueueManager.cs`, `EndingLogReporter.cs` | 로그 식별, 중복 방지, 전송 실패 재시도 |
 | 11 | Mini-game Prototype | `MiniGameManager.cs`, 개별 Manager | 공통 흐름, 입력·시간·완료 조건 |
 
 ---
@@ -92,7 +92,34 @@ SOSkill
 
 ---
 
-# 2. &lt;네 발자국&gt; — Data-driven Systems
+# 2. &lt;필연과 우연&gt; — Runtime Systems
+
+## ActionPointSystem
+
+- `ActionPointManager.cs`
+  - 공통 행동력 처리와 날짜 전환 연출
+- `Room1ActionPointManager.cs`, `Room2ActionPointManager.cs`
+  - Room별 규칙과 예외 처리
+
+## PuzzleDragAndDropSystem
+
+- `SewingBoxBead.cs`
+  - 드래그 입력, 좌표 변환, DropZone 탐색, Row Constraint
+- `SewingBoxPuzzle.cs`
+  - Dictionary 기반 정답 상태 관리
+
+## SFXPriorityChannelSystem
+
+- `SoundPlayer.cs`
+  - Low/High 2단계 Priority
+  - High 예약 채널
+  - Round-robin 탐색
+  - High 요청의 Voice Stealing
+  - `Time.unscaledTime` Click Debounce
+
+---
+
+# 3. &lt;네 발자국&gt; — Data-driven Systems
 
 ## EventResultSystem
 
@@ -123,33 +150,6 @@ SOSkill
   - RunID와 eventId 기반 로그 구성
 - `MemoryPuzzleStateExtractor.cs`
   - 저장 파일에서 테스트 데이터 추출
-
----
-
-# 3. <필연과 우연> — Runtime Systems
-
-## ActionPointSystem
-
-- `ActionPointManager.cs`
-  - 공통 행동력 처리와 날짜 전환 연출
-- `Room1ActionPointManager.cs`, `Room2ActionPointManager.cs`
-  - Room별 규칙과 예외 처리
-
-## PuzzleDragAndDropSystem
-
-- `SewingBoxBead.cs`
-  - 드래그 입력, 좌표 변환, DropZone 탐색, Row Constraint
-- `SewingBoxPuzzle.cs`
-  - Dictionary 기반 정답 상태 관리
-
-## SFXPriorityChannelSystem
-
-- `SoundPlayer.cs`
-  - Low/High 2단계 Priority
-  - High 예약 채널
-  - Round-robin 탐색
-  - High 요청의 Voice Stealing
-  - `Time.unscaledTime` Click Debounce
 
 ---
 
