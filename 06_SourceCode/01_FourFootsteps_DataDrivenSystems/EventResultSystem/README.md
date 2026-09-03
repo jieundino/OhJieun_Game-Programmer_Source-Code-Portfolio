@@ -28,7 +28,7 @@ Result는 `ExecuteResultCoroutine`의 switch문으로 처리합니다. 대사 �
 
 - `ParseEvents` — `events.csv`를 줄 단위로 파싱합니다. 하나의 EventID에 여러 EventLine(조건 집합 + 결과 집합)이 있을 수 있어, 이미 등록된 ID면 `AddEventLine`으로 추가합니다.
 - `CallEvent(eventID)` — EventLine을 순서대로 확인합니다. 조건이 없으면 무조건 실행, `AND`/`OR` Logic에 따라 `CheckConditions_AND` / `CheckConditions_OR`을 호출합니다. 조건을 만족한 첫 번째 EventLine의 Result를 실행하고 즉시 반환합니다.
-- **실행 모드 선택** — Result가 1개거나 모드가 `Instant`면 각 Result를 독립적인 코루틴으로 병렬 실행합니다. `Sequential`이면 `ExecuteResultsSequentially`로 하나씩 순차 실행합니다.
+- **실행 모드 선택** — Result가 1개거나 모드가 `Instant`면 여러 Result를 각각 Coroutine으로 시작해 동시 진행합니다. `Sequential`이면 `ExecuteResultsSequentially`로 하나씩 순차 실행합니다.
 - **Function-wrapped Result** — `Result_StartDialogue`, `Result_Increment` 처럼 파라미터가 포함된 ID는 CSV에 등록하지 않고 코드에서 직접 처리합니다. `IsFunctionWrappedResult`로 이 패턴을 식별합니다.
 
 **ResultManager — 결과 실행**
@@ -59,7 +59,7 @@ CallEvent(eventID)
       └─ OR  → CheckConditions_OR()  → true → ExecuteResults(), return
 
 ExecuteResults(results, mode)
-├─ Instant    → 각 Result 독립 코루틴 (병렬)
+├─ Instant    → 각 Result 독립 Coroutine으로 동시 진행
 └─ Sequential → ExecuteResultsSequentially() (순차 yield)
 
 ExecuteResultCoroutine(resultID)
@@ -109,7 +109,7 @@ CSV에 오타로 잘못된 Result ID를 입력하면 `results` Dictionary에서 
 ## 사용 기술
 
 - CSV 파싱 (`TextAsset.text.Split('\n')`) — 데이터 주도 이벤트 설계
-- `Dictionary<string, GameEvent>` — O(1) 이벤트 조회
+- `Dictionary<string, GameEvent>` — 평균 O(1) 기반 ID 조회
 - Unity Coroutine (`IEnumerator`, `yield return`) — 비동기 결과 순차 실행
-- `IResultExecutable` 인터페이스 — ResultManager와 씬 오브젝트 간 의존성 역전
+- `IResultExecutable` 인터페이스 — ResultManager와 실행 객체 간 결합도 완화
 - `DontDestroyOnLoad` + 싱글턴 — 씬 전환 간 이벤트 데이터 유지

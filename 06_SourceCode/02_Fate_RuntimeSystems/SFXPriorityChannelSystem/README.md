@@ -11,7 +11,7 @@ BGM과 효과음(SFX) 재생을 통합 관리하는 사운드 플레이어입니
 
 Unity의 `AudioSource` 컴포넌트는 개수가 제한됩니다. 클릭음처럼 자주 발생하는 저우선순위 효과음이 채널을 모두 점유하면, 날짜 전환 연출음처럼 중요한 고우선순위 효과음이 재생되지 않습니다.
 
-이를 해결하기 위해 `UISoundPlayer` 배열을 두 구간으로 나눴습니다. `[0 ~ reservedHighPriorityChannels)` 구간은 High 우선순위 전용으로 예약하고, `[reserved ~ end)` 구간은 Low 우선순위가 사용합니다. High 효과음은 Low 채널을 강제로 선점(Voice Stealing)할 수 있지만, Low 효과음은 High 채널에 접근하지 못합니다.
+이를 해결하기 위해 `UISoundPlayer` 배열을 두 구간으로 나눴습니다. `[0 ~ reservedHighPriorityChannels)` 구간은 High 우선순위 전용으로 예약하고, `[reserved ~ end)` 구간은 Low 우선순위가 사용합니다. High 효과음은 일반 영역 채널을 강제로 선점(Voice Stealing)할 수 있지만, Low 효과음은 High 채널에 접근하지 못합니다.
 
 ---
 ## 담당 범위
@@ -47,7 +47,7 @@ UISoundPlay(num, priority)
 ├─ [우선순위 구간]   High → [0, reserved) / Low → [reserved, end)
 ├─ [라운드 로빈]     uiSoundPlayerCursor 기반 빈 채널 탐색
 │     빈 채널 있음 → PlayOnUISound() → return
-└─ [보이스 스틸링]   High만 해당 — Low 채널 Stop() 후 High 재생
+└─ [보이스 스틸링]   High만 해당 — 일반 영역 채널 Stop() 후 High 재생
 ```
 
 **`PlayOnUISound`**
@@ -66,7 +66,7 @@ UISoundPlay(num, priority)
 
 - 클릭 디바운스로 빠른 연속 클릭 효과음 자체를 억제
 - 우선순위 채널 분리로 High 효과음 전용 구간 확보
-- 보이스 스틸링으로 High 효과음이 Low 채널을 강제 선점 가능
+- 보이스 스틸링으로 High 효과음이 일반 영역 채널을 강제 선점 가능
 
 ```csharp
 // 클릭 디바운스
@@ -75,7 +75,7 @@ if (num == Sound_Click && Time.unscaledTime - lastClickTime < clickMinInterval) 
 // 보이스 스틸링 (High 전용)
 if (prio == SfxPriority.High)
 {
-    // Low 채널 중 재생 중인 채널 탐색
+    // 일반 영역 채널 중 재생 중인 채널 탐색
     var src = UISoundPlayer[i];
     if (src.isPlaying)
     {
